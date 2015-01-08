@@ -29,4 +29,27 @@ public:
         ret = max(ret, max_sum);
         max_branch_sum = max(node->val, max(node->val+max_left, node->val+max_right));
     }
+    
+    /* another way of the recursive function */
+    void recursive(TreeNode *node, int &max_path_sum){
+        // post order + update two sums
+        max_path_sum = node->val;
+        int local_sum = node->val;
+        
+        if(node->left){
+            int max_left;
+            recursive(node->left, max_left);
+            max_path_sum = max(max_path_sum, node->val + max_left);
+            local_sum = max(local_sum, local_sum + max_left);
+        }
+        
+        if(node->right){
+            int max_right;
+            recursive(node->right, max_right);
+            max_path_sum = max(max_path_sum, node->val + max_right);
+            local_sum = max(local_sum, local_sum + max_right);
+        }
+        
+        maxsum = max(maxsum, local_sum);
+    }
 };
