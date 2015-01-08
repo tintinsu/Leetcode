@@ -18,6 +18,14 @@ public:
         return 1+min(min_left, min_right);
     }
 
+	/* sol_1-another: dfs*/
+    int minDepth(TreeNode *root) {
+        if(!root) return 0;
+        if(root->left && root->right) return 1+min(minDepth(root->left), minDepth(root->right));
+        TreeNode *node = root->left?root->left:(root->right?root->right:NULL);
+        return node?minDepth(node)+1 : 1;
+    }
+    
 	/* sol_2: bfs 
 	*  Method: find the first leaf node with bfs
 	*/
