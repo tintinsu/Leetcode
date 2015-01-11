@@ -1,5 +1,6 @@
 class Solution {
 public:
+    /*method 1*/
     int lengthOfLongestSubstring(string s) {
         // special case
         if(s.size()<=1) return s.size();
@@ -26,5 +27,25 @@ public:
         }
         // return largest
         return max_val;
+    }
+    
+    /*method 2*/
+    int lengthOfLongestSubstring(string s) {
+        if(s.size() == 0) return 0;
+        int st=0, ed=0, max_len=0;
+        unordered_set<char> uset;
+        while(ed < s.size()){
+            while(uset.find(s[ed])==uset.end()){
+                max_len = max(max_len, ed-st+1);
+                uset.insert(s[ed]);
+                ed++;
+                if(ed == s.size()) return max_len;
+            }
+            
+            while(s[st]!=s[ed]){
+                uset.erase(s[st++]);
+            }
+            uset.erase(s[st++]);
+        }
     }
 };
